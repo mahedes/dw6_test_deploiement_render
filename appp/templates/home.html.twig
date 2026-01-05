@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste Contacts{% endblock %}
+
+{% block body %}
+
+  {% for message in app.flashes('contact_add_success') %}
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+  {% endfor %}
+
+  {% for message in app.flashes('contact_edit_success') %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+  {% endfor %}
+  <h1>Liste des contacts</h1>
+
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prénom</th>
+      <th scope="col">Téléphone</th>
+      <th scope="col">Catégorie</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for contact in contacts %}
+    <tr>
+      <th scope="row">{{ contact.id }}</th>
+      <td>{{ contact.nom }}</td>
+      <td>{{ contact.prenom }}</td>
+      <td>{{ contact.telephone }}</td>
+      <td>{{ contact.category.title }}</td>
+      <td>
+        <a href="{{ path('app_contact',{id : contact.id}) }}" type="button" class="btn btn-info">Afficher</a>
+        <a href="{{ path('app_edit_contact', {id : contact.id}) }}" type="button" class="btn btn-warning">Modifier</a>
+        <a href="{{ path('app_delete_contact', {id : contact.id}) }}" type="button" class="btn btn-danger">Supprimer</a>
+      </td>
+      
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
